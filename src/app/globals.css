@@ -1,0 +1,93 @@
+@import "tailwindcss";
+
+/* ── Color palette ─────────────────────────────────────────
+   Midnight Black · Miami Blue · Caliente Red · Slate Gray   */
+@theme {
+  --color-midnight: #07080c;
+  --color-midnight-2: #0d0f15;
+  --color-surface: #11141b;
+  --color-miami: #00a8e8;
+  --color-miami-soft: #5cc8f2;
+  --color-caliente: #e63946;
+  --color-slate-line: #1f2530;
+  --color-slate-mute: #8a94a6;
+  --color-slate-text: #c3cad6;
+
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+  background: var(--color-midnight);
+}
+
+body {
+  background: var(--color-midnight);
+  color: var(--color-slate-text);
+}
+
+::selection {
+  background: color-mix(in srgb, var(--color-miami) 35%, transparent);
+  color: white;
+}
+
+/* faint grid behind the hero */
+.bg-grid {
+  background-image:
+    linear-gradient(to right, rgb(255 255 255 / 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(255 255 255 / 0.035) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 30%, black 30%, transparent 75%);
+}
+
+/* the mouse-following glow on cards (see SpotlightCard) */
+.spotlight {
+  position: relative;
+  isolation: isolate;
+}
+.spotlight::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: radial-gradient(
+    380px circle at var(--mx, 50%) var(--my, 50%),
+    color-mix(in srgb, var(--color-miami) 85%, transparent),
+    transparent 45%
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
+  z-index: 1;
+}
+.spotlight::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    500px circle at var(--mx, 50%) var(--my, 50%),
+    color-mix(in srgb, var(--color-miami) 9%, transparent),
+    transparent 40%
+  );
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
+  z-index: -1;
+}
+.spotlight:hover::before,
+.spotlight:hover::after {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
