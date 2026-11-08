@@ -1,8 +1,10 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { AnimatePresence, motion } from "motion/react";
 import {
+  ArrowRight,
   ArrowUpRight,
   Briefcase,
   Check,
@@ -162,7 +164,7 @@ export function Skills() {
   return (
     <Section id="skills">
       <Heading label="03 · Skills" title="What I work with" />
-      <div className="grid gap-5 md:grid-cols-3">
+      <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
         {skills.map((g, i) => (
           <Reveal key={g.group} delay={i * 0.08}>
             <SpotlightCard className="h-full p-7">
@@ -189,6 +191,15 @@ export function Skills() {
 }
 
 /* ── PROJECTS ── */
+// The "More on GitHub" card stretches to fill whatever space is left in the
+// last row, so the grid never ends with a gap (featured cards take 2 columns).
+function moreCardSpan() {
+  const used = projects.reduce((n, p) => n + (p.featured ? 2 : 1), 0);
+  const md = used % 2 === 1 ? "md:col-span-1" : "md:col-span-2";
+  const lg = ["lg:col-span-3", "lg:col-span-2", "lg:col-span-1"][used % 3];
+  return `${md} ${lg}`;
+}
+
 export function Projects() {
   return (
     <Section id="projects">
@@ -248,8 +259,17 @@ export function Projects() {
                   </span>
                 ))}
               </div>
-              {(p.live || p.code) && (
+              {(p.writeup || p.live || p.code) && (
                 <div className="mt-6 flex gap-5 border-t border-slate-line pt-5 text-sm">
+                  {p.writeup && (
+                    <Link
+                      href={p.writeup}
+                      className="group/w inline-flex items-center gap-1 font-medium text-white hover:text-miami"
+                    >
+                      Read the write-up
+                      <ArrowRight size={15} className="transition-transform group-hover/w:translate-x-0.5" />
+                    </Link>
+                  )}
                   {p.live && (
                     <a
                       href={p.live}
@@ -276,7 +296,7 @@ export function Projects() {
             </SpotlightCard>
           </Reveal>
         ))}
-        <Reveal delay={0.1} className="md:col-span-2">
+        <Reveal delay={0.1} className={moreCardSpan()}>
           <motion.a
             href={profile.github}
             target="_blank"

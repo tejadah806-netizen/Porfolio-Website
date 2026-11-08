@@ -100,8 +100,21 @@ export const timeline: TimelineItem[] = [
 export const skills = [
   { group: "Languages", items: ["JavaScript", "Python", "C++", "HTML", "CSS"] },
   {
+    group: "Security & Systems",
+    items: [
+      "Linux (Ubuntu Server)",
+      "Command line",
+      "SSH key auth",
+      "UFW firewall",
+      "fail2ban",
+      "Nginx",
+      "TLS / HTTPS",
+      "Log analysis",
+    ],
+  },
+  {
     group: "Tools & Platforms",
-    items: ["GitHub", "VS Code", "Oracle APEX", "Microsoft Office"],
+    items: ["GitHub", "VS Code", "Virtual machines (UTM)", "Oracle APEX", "Microsoft Office"],
   },
   {
     group: "Soft skills",
@@ -116,12 +129,23 @@ export type Project = {
   date?: string;
   live?: string;
   code?: string;
+  /** Path to a write-up page on this site, e.g. "/projects/linux-hardening/" */
+  writeup?: string;
   featured?: boolean;
   comingSoon?: boolean;
   inProgress?: boolean;
 };
 
 export const projects: Project[] = [
+  {
+    title: "Hardened Linux Web Server",
+    description:
+      "Built an Ubuntu web server in a VM and hardened it with SSH key-only login, a default-deny firewall, HTTPS and fail2ban, then attacked it myself to prove each control works. My simulated brute-force attack was banned automatically in about 0.4 seconds.",
+    tags: ["Linux", "Ubuntu Server", "SSH", "UFW", "fail2ban", "Nginx", "TLS"],
+    date: "Nov 2026",
+    writeup: "/projects/linux-hardening/",
+    featured: true,
+  },
   {
     title: "Expense Tracker",
     description:
@@ -130,7 +154,6 @@ export const projects: Project[] = [
     date: "Sep 2025",
     live: "https://tejadah806-netizen.github.io/Expense-Tracker/",
     code: "https://github.com/tejadah806-netizen/Expense-Tracker",
-    featured: true,
   },
   {
     title: "Painter — Unity Project",
